@@ -1,16 +1,23 @@
-import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Index from './pages/Index';
+import ShankozLandingPage from './pages/ShankozLandingPage';
 import NotFound from './pages/NotFound';
-import ShankozLandingPage from './pages/ShankozLandingPage'; // Assuming this component will be created in src/pages
+import Layout from './components/Layout'; // Assuming the Layout component will be created here
+import './App.css';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<ShankozLandingPage />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <Router>
+      {/* Wrap the entire application content with the Layout component to apply global themes and animations */}
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/landing" element={<ShankozLandingPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Layout>
+    </Router>
   );
 }
 
