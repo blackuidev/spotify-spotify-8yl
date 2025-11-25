@@ -1,24 +1,24 @@
-import * as React from "react"
+import { useState, useEffect } from 'react';
 
-const MOBILE_BREAKPOINT = 1024
+export const useMobile = (breakpoint: number = 768) => {
+  const [isMobile, setIsMobile] = useState(false);
 
-export function useIsMobile() {
-  const [isMobile, setIsMobile] = React.useState<boolean>(
-    typeof window !== 'undefined' ? window.innerWidth < MOBILE_BREAKPOINT : false
-  )
-
-  React.useEffect(() => {
-    if (typeof window === 'undefined') return
-
+  useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
-    }
+      setIsMobile(window.innerWidth < breakpoint);
+    };
 
-    window.addEventListener('resize', checkMobile)
-    checkMobile() // Initial check
-    
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
+    // Initial check
+    checkMobile();
 
-  return isMobile
-}
+    // Add event listener for window resize
+    window.addEventListener('resize', checkMobile);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, [breakpoint]); // Re-run effect if breakpoint changes
+
+  return isMobile;
+};
