@@ -1,36 +1,17 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import 'react-toastify/dist/ReactToastify.css';
+import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import NotFound from './pages/NotFound';
+import ShankozLandingPage from './pages/ShankozLandingPage'; // Assuming this component will be created in src/pages
 
-
-const queryClient = new QueryClient();
-
-// =======================================================
-// ✅ Wrapper that hides Header on specific routes
-// =======================================================
-const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    return (
-        <>
-            {/* {!shouldHideHeader && <Header />} */}
-            {children}
-        </>
-    );
-};
-// =======================================================
-
-const App = () => (
-    <div className="font-primarylw">
-        <QueryClientProvider client={queryClient}>
-            <BrowserRouter>
-                <Layout>
-                    <Routes>
-                        <Route path="/" element={<Index />} />
-                    </Routes>
-                </Layout>
-            </BrowserRouter>
-        </QueryClientProvider>
-    </div >
-);
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<ShankozLandingPage />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
 
 export default App;
